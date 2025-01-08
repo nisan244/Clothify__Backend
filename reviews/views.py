@@ -17,7 +17,9 @@ class ReviewAPIView(APIView):
         serializer = Review_Serializer(data= request.data)
         if serializer.is_valid():
             serializer.save(reviewer= request.user)
-            return Response({'message': 'Review added successfully!', 'data': serializer.data})
+            product = serializer.instance.product
+            reviews = product.reviews.all()
+            return Response({'message': 'Review added successfully!', 'reviews': Review_Serializer(reviews, many=True).data})
         return Response(serializer.errors, status=400)
 
 

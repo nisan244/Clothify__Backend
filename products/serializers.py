@@ -4,6 +4,8 @@ from reviews . serializers import Review_Serializer
 
 class Product_Serializer(serializers.ModelSerializer):
     reviews = Review_Serializer(many=True, read_only=True)
+    brand = serializers.StringRelatedField(many = True)
+    category = serializers.StringRelatedField(many = True)
 
     class Meta:
         model = Product_Model
